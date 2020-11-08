@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">truerand</string>
     <string name="btnstart">Button</string>
+    <string name="getResource">获取随机数</string>
 </resources>

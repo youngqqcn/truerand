@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                         // imageView.setImageDrawable(cachedImage);
                         String rsp = SendGetRequest("");
                         Log.i("rsp", rsp);
+                        TextView txtOutput = (TextView)findViewById(R.id.idTxtOutput);
+                        txtOutput.setText(rsp);
                     }
                 }).start();
 
@@ -57,10 +60,12 @@ public class MainActivity extends AppCompatActivity {
     public static String SendGetRequest(String content){
 
         HttpURLConnection conn=null;
+        String strRet = "";
         try {
 
-            String strUrl ="http://81.68.110.75:52334/";
+//            String strUrl ="http://81.68.110.75:52334/";
 //            String strUrl="https://www.baidu.com";
+            String strUrl = "https://www.random.org/integers/?num=2&min=1&max=1000000000&col=2&base=10&format=plain&rnd=new";
             URL url = new URL(strUrl);
             conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(5000);
@@ -68,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
             if(HttpURLConnection.HTTP_OK== conn.getResponseCode()){
                 Log.i("PostGetUtil","get请求成功");
                 InputStream in = conn.getInputStream();
-                String backcontent= readInputStream(in);
-                backcontent= URLDecoder.decode(backcontent,"UTF-8");
+                String backcontent = readInputStream(in);
+                backcontent = URLDecoder.decode(backcontent,"UTF-8");
                 Log.i("PostGetUtil",backcontent);
+                strRet = backcontent;
+                strRet = strRet.replace("\n", "");
                 in.close();
             }
             else {
@@ -83,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         finally{
             conn.disconnect();
         }
-        return null;
+        return strRet;
     }
 
     private static  String readInputStream(InputStream inputStream) throws IOException {
