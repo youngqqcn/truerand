@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">truerand</string>
+    <string name="btnstart">Button</string>
 </resources>
